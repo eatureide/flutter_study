@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'container_align.dart';
+import 'banner_header.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,8 +24,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Flutter Demo Home Page")),
-      body: Column(children: [ContainerAlign()]),
+      appBar: AppBar(title: const Text("练习布局")),
+      body: Column(
+        children: [
+          BannerHeader(),
+        ],
+      ),
     );
   }
 }
