@@ -11,76 +11,53 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(home: Scaffold(body: MyHomePage()));
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Route Demo',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomePage(),
-        '/detail': (context) {
-          final args =
-              ModalRoute.of(context)!.settings.arguments
-                  as Map<String, dynamic>?;
-          return DetailPage(args: args);
-        },
-      },
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const HomePage(),
     );
   }
 }
 
-// 主页
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Home Page')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (BuildContext context) {
-            //       return const DetailPage(message: "我是参数");
-            //     },
-            //   ),
-            // );
-
-            Navigator.pushNamed(
-              context,
-              '/detail',
-              arguments: {'message': '我是命名路由传递的参数'},
-            );
-          },
-          child: Text('Go to Detail Page'),
-        ),
-      ),
-    );
-  }
+  State createState() => _HomePageState();
 }
 
-// 详情页
-class DetailPage extends StatelessWidget {
-  final Map<String, dynamic>? args;
-  const DetailPage({super.key, this.args});
+class _HomePageState extends State {
+  bool flag = true;
 
   @override
   Widget build(BuildContext context) {
-    // 直接从构造函数获取参数
-    final String message = args?['message'] ?? 'No Message';
     return Scaffold(
-      appBar: AppBar(title: Text('Detail Page')),
+      appBar: AppBar(title: const Text('大小变化')),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.refresh),
+        onPressed: () {
+          setState(() {
+            flag = !flag;
+          });
+        },
+      ),
       body: Center(
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('back to home page'),
-            ),
-            Text(message),
-          ],
+        child: TweenAnimationBuilder(
+          tween: Tween(begin: 100.0, end: flag ? 100.0 : 200.0),
+          duration: const Duration(seconds: 1),
+          builder: ((context, value, child) {
+            return Icon(Icons.star, color: Colors.red, size: value);
+          }),
         ),
       ),
     );
