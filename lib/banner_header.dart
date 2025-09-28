@@ -22,7 +22,7 @@ class _BannerHeaderState extends State<BannerHeader> {
       alignment: Alignment.bottomCenter,
       children: [
         SizedBox(
-          height: 200,
+          height: 350,
           child: PageView(
             onPageChanged: (int index) {
               setState(() {
@@ -42,6 +42,7 @@ class _BannerHeaderState extends State<BannerHeader> {
             }).toList(),
           ),
         ),
+
         Align(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -58,6 +59,49 @@ class _BannerHeaderState extends State<BannerHeader> {
                 ),
               );
             }).toList(),
+          ),
+        ),
+
+        Positioned(
+          left: 6,
+          top: 35,
+          child: Container(
+            width: 50,
+            height: 50,
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(50),
+            ),
+          ),
+        ),
+
+        Positioned(
+          left: 0,
+          right: -50,
+          top: 35,
+          child: Center(
+            child: SizedBox(
+              width: 330,
+              child: TextField(
+                style: TextStyle(fontSize: 12),
+                decoration: InputDecoration(
+                  hintText: '搜索商品',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                onChanged: (value) {
+                  print('当前输入: $value');
+                },
+                onSubmitted: (value) {
+                  print('提交的内容: $value');
+                },
+              ),
+            ),
           ),
         ),
       ],

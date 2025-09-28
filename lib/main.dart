@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("练习布局")),
+      // appBar: AppBar(title: const Text("练习布局")),
       body: Column(
         children: [
           BannerHeader(),
