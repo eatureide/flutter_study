@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'banner_header.dart';
+import 'menu.dart';
+import 'coupon.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,10 +26,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: const Text("练习布局")),
       body: Column(
         children: [
           BannerHeader(),
+          Menu(),
+          Coupon(),
         ],
       ),
     );
