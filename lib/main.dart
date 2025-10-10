@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'banner_header.dart';
 import 'menu.dart';
 import 'coupon.dart';
+import 'table.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,12 +27,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          BannerHeader(),
-          Menu(),
-          Coupon(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [BannerHeader(), Menu(), Coupon(), MyTableCombine()],
+        ),
       ),
     );
   }

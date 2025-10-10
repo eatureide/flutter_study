@@ -41,7 +41,7 @@ class _Menu extends State<Menu> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Color.fromARGB(255, 220, 220, 220),
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
