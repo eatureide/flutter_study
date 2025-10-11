@@ -3,6 +3,7 @@ import 'banner_header.dart';
 import 'menu.dart';
 import 'coupon.dart';
 import 'table.dart';
+import 'nav.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Nav(),
       body: SingleChildScrollView(
         child: Column(
           children: [BannerHeader(), Menu(), Coupon(), MyTableCombine()],
