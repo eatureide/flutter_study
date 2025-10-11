@@ -32,7 +32,7 @@ class _MyTabs extends State<MyTabs> {
       width: double.infinity,
       height: 80,
       child: ListView(
-        scrollDirection: Axis.horizontal, // 水平方向
+        scrollDirection: Axis.horizontal,
         children: tableData.asMap().entries.map((item) {
           return Container(
             color: Colors.transparent,

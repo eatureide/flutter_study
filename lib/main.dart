@@ -1,38 +1,37 @@
 import 'package:flutter/material.dart';
-import 'banner_header.dart';
-import 'menu.dart';
-import 'coupon.dart';
-import 'table.dart';
 import 'nav.dart';
+import 'home.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyApp();
+}
+
+class _MyApp extends State<MyApp> {
+  int _currentIndex = 0;
+
+  final List<Widget> pageList = const [Home(), Text('1')];
+
+  onTap(flag) {
+    setState(() {
+      _currentIndex = flag;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Nav(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [BannerHeader(), Menu(), Coupon(), MyTableCombine()],
-        ),
+      home: Scaffold(
+        bottomNavigationBar: Nav(onTap: onTap, currentIndex: _currentIndex),
+        body: pageList[_currentIndex],
       ),
     );
   }

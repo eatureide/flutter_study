@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+typedef TapCallBack = void Function(int flag);
+
 class Nav extends StatefulWidget {
-  const Nav({super.key});
+  final TapCallBack onTap;
+  final int currentIndex;
+  const Nav({super.key, required this.onTap, required this.currentIndex});
 
   @override
   State<Nav> createState() => _Nav();
 }
 
 class _Nav extends State<Nav> {
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
+
     return BottomNavigationBar(
-      currentIndex: _currentIndex,
+      currentIndex: widget.currentIndex,
       type: BottomNavigationBarType.fixed,
       fixedColor: Colors.blue,
       onTap: (flag) {
-        setState(() {
-          _currentIndex = flag;
-        });
+        widget.onTap(flag);
       },
       items: [
         BottomNavigationBarItem(
