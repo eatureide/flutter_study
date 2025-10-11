@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'nav.dart';
 import 'home.dart';
+import 'shop.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatefulWidget {
 class _MyApp extends State<MyApp> {
   int _currentIndex = 0;
 
-  final List<Widget> pageList = const [Home(), Text('1')];
+  final List<Widget> pageList = const [Home(), Shop()];
 
   onTap(flag) {
     setState(() {
