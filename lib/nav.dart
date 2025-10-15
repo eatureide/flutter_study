@@ -33,6 +33,10 @@ class _Nav extends State<Nav> {
           icon: Icon(CupertinoIcons.shopping_cart, size: 20),
           label: ('商城'),
         ),
+         BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.square_grid_2x2, size: 20),
+          label: ('分类'),
+        ),
       ],
     );
   }

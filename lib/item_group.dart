@@ -27,7 +27,7 @@ class _Item extends State<Item> {
             width: 140,
             height: 100,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 244, 231, 215),
+              color: Colors.blue.withAlpha(30),
               borderRadius: BorderRadiusDirectional.only(
                 topStart: Radius.circular(6),
                 topEnd: Radius.circular(6),
@@ -147,8 +147,11 @@ class _ItemGroup extends State<ItemGroup> {
         children: [
           Expanded(
             child: Container(
-              color: Colors.transparent,
               height: 220,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(6),
+              ),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
