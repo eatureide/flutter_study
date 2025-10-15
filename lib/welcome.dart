@@ -35,7 +35,6 @@ class _Welcome extends State<Welcome> {
         ),
         Container(
           color: Colors.transparent,
-          margin: EdgeInsets.only(right: 20),
           child: Row(
             children: [
               Container(

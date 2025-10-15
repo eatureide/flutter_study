@@ -22,7 +22,6 @@ class _Search extends State<Search> {
                 borderRadius: BorderRadius.circular(24),
                 borderSide: BorderSide(color: Colors.transparent),
               ),
-              // 3. 聚焦（选中）状态的圆角边框
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(24),
                 borderSide: BorderSide(color: Colors.transparent),

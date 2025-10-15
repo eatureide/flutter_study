@@ -15,7 +15,6 @@ class Nav extends StatefulWidget {
 class _Nav extends State<Nav> {
   @override
   Widget build(BuildContext context) {
-
     return BottomNavigationBar(
       currentIndex: widget.currentIndex,
       type: BottomNavigationBarType.fixed,
@@ -23,15 +22,15 @@ class _Nav extends State<Nav> {
       onTap: (flag) {
         widget.onTap(flag);
       },
+      // showSelectedLabels: false,
+      // showUnselectedLabels: false,
       items: [
         BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.home, size: 20),
-          activeIcon: Icon(CupertinoIcons.home, size: 20),
           label: ('首页'),
         ),
         BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.shopping_cart, size: 20),
-          activeIcon: Icon(CupertinoIcons.shopping_cart, size: 20),
           label: ('商城'),
         ),
       ],
