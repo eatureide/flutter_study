@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'search.dart';
+import 'tabs.dart';
 
 class Classification extends StatefulWidget {
   const Classification({super.key});
@@ -17,9 +18,15 @@ class _Classification extends State<Classification> {
       width: double.infinity,
       height: double.infinity,
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Search()],
+        child: Stack(
+          clipBehavior: Clip.hardEdge,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Search(), Container(height: 85), Text('next')],
+            ),
+            Positioned(top: 60, left: 0, width: 350, height: 60, child: Tabs()),
+          ],
         ),
       ),
     );
