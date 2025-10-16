@@ -117,7 +117,7 @@ class _Tabs extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
       width: double.infinity,
       height: 84,
       child: Stack(
@@ -153,7 +153,7 @@ class _Tabs extends State<Tabs> {
 
                     moveTo(int index) {
                       double indexDouble = index.toDouble();
-                      double offset = indexDouble * 52.0 + 8.0;
+                      double offset = indexDouble * 52.0;
                       _scrollController.animateTo(
                         offset,
                         duration: Duration(milliseconds: 500),

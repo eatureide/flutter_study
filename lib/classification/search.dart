@@ -19,6 +19,7 @@ class _Search extends State<Search> {
         borderRadius: BorderRadius.circular(36),
       ),
       padding: EdgeInsets.only(left: 6),
+      margin: EdgeInsets.only(left: 20),
       child: Stack(
         alignment: AlignmentDirectional.centerStart,
         children: [
@@ -42,7 +43,7 @@ class _Search extends State<Search> {
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding: EdgeInsets.symmetric(
-                    horizontal:6,
+                    horizontal: 6,
                     vertical: 10,
                   ),
                 ),
