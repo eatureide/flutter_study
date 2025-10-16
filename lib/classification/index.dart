@@ -17,17 +17,13 @@ class _Classification extends State<Classification> {
       color: Color.fromARGB(255, 239, 245, 247),
       width: double.infinity,
       height: double.infinity,
-      child: SingleChildScrollView(
-        child: Stack(
-          clipBehavior: Clip.hardEdge,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Search(), Container(height: 85), Text('next')],
-            ),
-            Positioned(top: 60, left: 0, width: 350, height: 60, child: Tabs()),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Search(),
+          Tabs()
+        ],
       ),
     );
   }

@@ -1,47 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-final List<Map<String, dynamic>> itemData = const [
+final List<Map<String, dynamic>> data = const [
+  {"title": "为您推荐"},
+  {"title": "跨境购"},
   {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
-  {"title": "中小样"},
+  {"title": "肌肤护理"},
+  {"title": "个人护理"},
+  {"title": "女性护理"},
+  {"title": "口腔护理"},
+  {"title": "美发护发"},
+  {"title": "潮流彩妆"},
+  {"title": "美妆工具"},
+  {"title": "男士专区"},
+  {"title": "品质生活"},
+  {"title": "计生情趣"},
+  {"title": "零食饮料"},
+  {"title": "电器"},
+  {"title": "营养保底"},
+  {"title": "母婴生活"},
+  {"title": "大牌香氛"},
+  {"title": "IP专区"},
+  {"title": "奥莱专区"},
 ];
+
+final List<Map<String, dynamic>> itemData = data.asMap().entries.map((entry) {
+  return {...entry.value, 'index': entry.key};
+}).toList();
+
+typedef TapCallBack = void Function(int flag);
 
 class IconItem extends StatelessWidget {
   final String title;
-  const IconItem({super.key, required this.title});
+  final TapCallBack onTap;
+  final int index;
+  final int currentIndex;
+
+  const IconItem({
+    super.key,
+    required this.title,
+    required this.onTap,
+    required this.index,
+    required this.currentIndex,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 40,
-          height: 36,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 220, 220, 220),
-            borderRadius: BorderRadius.circular(16),
-          ),
+    return GestureDetector(
+      onTap: () {
+        onTap(index);
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 52,
+              height: 50,
+              margin: EdgeInsets.only(bottom: 6),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 220, 220, 220),
+                borderRadius: BorderRadius.circular(22),
+                border: Border.all(
+                  width: 2,
+                  color: currentIndex == index
+                      ? Color.fromARGB(255, 47, 238, 236)
+                      : Colors.white,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+              decoration: BoxDecoration(
+                color: currentIndex == index
+                    ? Color.fromARGB(255, 47, 238, 236)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: currentIndex == index ? Colors.white : Colors.black,
+                ),
+              ),
+            ),
+          ],
         ),
-        Text(title, style: TextStyle(fontSize: 12)),
-      ],
+      ),
     );
   }
 }
-
-final List<Map<String, dynamic>> indexedData = itemData.asMap().entries.map((
-  entry,
-) {
-  return {...entry.value, 'index': entry.key};
-}).toList();
 
 class Tabs extends StatefulWidget {
   const Tabs({super.key});
@@ -51,92 +103,147 @@ class Tabs extends StatefulWidget {
 }
 
 class _Tabs extends State<Tabs> {
-  bool pop = false;
+  int currentIndex = 0;
 
-  handleSwitchPop() {
+  handleIconClick(index) {
+    print(index);
     setState(() {
-      print('in');
-      pop = !pop;
+      currentIndex = index;
     });
   }
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 20),
       width: double.infinity,
-      height: 60,
-      color: Colors.transparent,
+      height: 84,
       child: Stack(
-        clipBehavior: Clip.none,
         children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 150),
-              width: 350,
-              height: pop ? 200 : 60,
-              color: Color.fromARGB(255, 239, 245, 247),
-              child: Container(
-                width: 300,
-                height: 60,
-                color: Colors.transparent,
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  clipBehavior: Clip.hardEdge,
-                  scrollDirection: pop ? Axis.vertical : Axis.horizontal,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: itemData.sublist(0, 5).map((item) {
-                        return Container(
-                          width: 60,
-                          height: 60,
-                          margin: EdgeInsets.only(top: 6),
-                          color: Colors.transparent,
-                          child: IconItem(title: item['title']),
-                        );
-                      }).toList(),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: itemData.sublist(6, 11).map((item) {
-                        return Container(
-                          width: 60,
-                          height: 60,
-                          color: Colors.transparent,
-                          margin: EdgeInsets.only(top: 6),
-                          child: IconItem(title: item['title']),
-                        );
-                      }).toList(),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: itemData.sublist(6, 11).map((item) {
-                        return Container(
-                          width: 60,
-                          height: 60,
-                          color: Colors.transparent,
-                          margin: EdgeInsets.only(top: 6),
-                          child: IconItem(title: item['title']),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          ListView(
+            controller: _scrollController,
+            scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.fromLTRB(0, 0, 36, 0),
+            children: itemData.map((item) {
+              return IconItem(
+                index: item['index'],
+                title: item['title'],
+                onTap: (index) {
+                  handleIconClick(index);
+                },
+                currentIndex: currentIndex,
+              );
+            }).toList(),
           ),
           Positioned(
             top: 0,
-            right: 0,
+            right: -1,
+            bottom: -1,
             child: GestureDetector(
-              onTap: handleSwitchPop,
+              onTap: () {
+                showDialog(
+                  barrierColor: Colors.transparent,
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    final mediaQueryData = MediaQuery.of(context);
+                    final screenWidth = mediaQueryData.size.width;
+
+                    moveTo(int index) {
+                      double indexDouble = index.toDouble();
+                      double offset = indexDouble * 52.0 + 8.0;
+                      _scrollController.animateTo(
+                        offset,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+
+                    return StatefulBuilder(
+                      builder:
+                          (BuildContext context, StateSetter dialogSetState) {
+                            return Stack(
+                              children: [
+                                Positioned(
+                                  top: 70,
+                                  left: 0,
+                                  child: Container(
+                                    padding: EdgeInsets.only(left: 5),
+                                    width: screenWidth,
+                                    height: 380,
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 239, 245, 247),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color.fromARGB(255, 239, 245, 247),
+                                          Colors.white,
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: GridView.count(
+                                      crossAxisCount: 5,
+                                      children: itemData.map((item) {
+                                        return IconItem(
+                                          index: item['index'],
+                                          title: item['title'],
+                                          currentIndex: currentIndex,
+                                          onTap: (index) {
+                                            dialogSetState(() {
+                                              currentIndex = index;
+                                            });
+                                            handleIconClick(index);
+                                            moveTo(index);
+                                            Navigator.of(context).pop();
+                                          },
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 420,
+                                  left: 0,
+                                  right: 0,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          '点击收起',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        Icon(
+                                          CupertinoIcons.arrowtriangle_up_fill,
+                                          size: 8,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                    );
+                  },
+                );
+              },
               child: Container(
+                color: Color.fromARGB(255, 239, 245, 247),
                 width: 30,
                 height: 60,
-                color: Color.fromARGB(255, 239, 245, 247),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('全', style: TextStyle(fontSize: 12)),
