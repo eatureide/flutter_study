@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'search.dart';
 import 'tabs.dart';
+import 'content.dart';
 
 class Classification extends StatefulWidget {
   const Classification({super.key});
@@ -20,7 +21,7 @@ class _Classification extends State<Classification> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [Search(), Tabs(), Text('container')],
+        children: [Search(), Tabs(), Content()],
       ),
     );
   }
