@@ -169,9 +169,19 @@ class _Tabs extends State<Tabs> {
                                   top: 100,
                                   width: 1000,
                                   height: 1000,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(107, 0, 0, 0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                          107,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

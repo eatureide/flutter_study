@@ -30,7 +30,6 @@ class _Content extends State<Content> {
   int currentIndex = 0;
 
   handleTabRowClick(index) {
-    print(index);
     setState(() {
       currentIndex = index;
     });
@@ -64,8 +63,8 @@ class _Content extends State<Content> {
                       child: Row(
                         children: [
                           Container(
-                            width: 5,
-                            height: 30,
+                            width: 4,
+                            height: 26,
                             color: currentIndex == item['index']
                                 ? Color.fromARGB(255, 47, 238, 236)
                                 : Colors.white,
