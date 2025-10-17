@@ -51,7 +51,7 @@ class IconItem extends StatelessWidget {
         onTap(index);
       },
       child: Container(
-        margin: EdgeInsets.only(right: 10),
+        margin: EdgeInsets.only(left: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +116,9 @@ class _Tabs extends State<Tabs> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+      // color:Colors.red,
+      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+      padding: EdgeInsets.only(left: 0),
       width: double.infinity,
       height: 84,
       child: Stack(
@@ -259,7 +261,7 @@ class _Tabs extends State<Tabs> {
               },
               child: Container(
                 color: Color.fromARGB(255, 239, 245, 247),
-                width: 30,
+                width: 50,
                 height: 60,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
