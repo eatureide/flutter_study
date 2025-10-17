@@ -106,7 +106,6 @@ class _Tabs extends State<Tabs> {
   int currentIndex = 0;
 
   handleIconClick(index) {
-    print(index);
     setState(() {
       currentIndex = index;
     });
@@ -166,6 +165,16 @@ class _Tabs extends State<Tabs> {
                           (BuildContext context, StateSetter dialogSetState) {
                             return Stack(
                               children: [
+                                Positioned(
+                                  top: 100,
+                                  width: 1000,
+                                  height: 1000,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(107, 0, 0, 0),
+                                    ),
+                                  ),
+                                ),
                                 Positioned(
                                   top: 70,
                                   left: 0,
