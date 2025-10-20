@@ -118,7 +118,7 @@ class _Tabs extends State<Tabs> {
     return Container(
       // color:Colors.red,
       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-      padding: EdgeInsets.only(left: 0),
+      padding: EdgeInsets.only(right: 0),
       width: double.infinity,
       height: 84,
       child: Stack(
@@ -126,7 +126,7 @@ class _Tabs extends State<Tabs> {
           ListView(
             controller: _scrollController,
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.fromLTRB(0, 0, 36, 0),
+            padding: EdgeInsets.fromLTRB(0, 0, 46, 0),
             children: itemData.map((item) {
               return IconItem(
                 index: item['index'],
