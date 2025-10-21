@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:async';
 
 final List<Map<String, dynamic>> bannerData = const [
-  {"title": "第1页", "color": Color.fromARGB(255, 241, 136, 136)},
+  {"title": "第1页", "color": Color.fromARGB(255, 142, 213, 193)},
   {"title": "第2页", "color": Color.fromARGB(255, 249, 194, 122)},
   {"title": "第3页", "color": Color.fromARGB(255, 120, 179, 243)},
 ];
@@ -23,11 +24,52 @@ final List<Map<String, dynamic>> bannerDataExtend = bannerData
     })
     .toList();
 
-class Detail extends StatelessWidget {
+class Detail extends StatefulWidget {
   const Detail({super.key});
 
   @override
+  State<Detail> createState() => _Detail();
+}
+
+class _Detail extends State<Detail> {
+  late PageController _pageController;
+  late Timer _timer;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+    _pageController.dispose();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (!_pageController.hasClients) return;
+      if (_currentIndex >= bannerDataExtend.length - 1) _currentIndex = 0;
+      _currentIndex = _currentIndex + 1;
+
+      _pageController.animateToPage(
+        _currentIndex,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final mediaQueryData = MediaQuery.of(context);
+    final screenSize = mediaQueryData.size;
+    final screenWidth = screenSize.width;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -39,40 +81,62 @@ class Detail extends StatelessWidget {
               width: double.infinity,
               height: 400,
               color: Colors.transparent,
-              child: PageView(
-                children: bannerDataExtend.map((item) {
-                  return Stack(
-                    children: [
-                      Container(color: item['color'] as Color),
-                      Positioned(
-                        bottom: 5,
-                        right: 5,
-                        width: 25,
-                        height: 18,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(140, 0, 0, 0),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text(
-                            "${item['index'] + 1}/${bannerDataExtend.length}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
+              child: Stack(
+                children: [
+                  PageView(
+                    controller: _pageController,
+                    children: bannerDataExtend.map((item) {
+                      return Stack(
+                        children: [
+                          Container(color: item['color'] as Color),
+                          Positioned(
+                            bottom: 26,
+                            right: 12,
+                            width: 25,
+                            height: 18,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(140, 0, 0, 0),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                "${item['index'] + 1}/${bannerDataExtend.length}",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
                           ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: Container(
+                      height: 10,
+                      width: screenWidth,
+
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 244, 244, 244),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
                         ),
                       ),
-                    ],
-                  );
-                }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ),
             // 正文内容
             Container(
+              height: 600,
               color: Color.fromARGB(255, 244, 244, 244),
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.fromLTRB(10, 6, 10, 10),
               child: Column(
                 children: [
                   Container(
@@ -257,7 +321,6 @@ class Detail extends StatelessWidget {
                         ),
                         Container(
                           color: Colors.transparent,
-                          margin: EdgeInsets.only(bottom: 12),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
