@@ -1,10 +1,294 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
+final List<Map<String, dynamic>> bannerData = const [
+  {"title": "第1页", "color": Color.fromARGB(255, 241, 136, 136)},
+  {"title": "第2页", "color": Color.fromARGB(255, 249, 194, 122)},
+  {"title": "第3页", "color": Color.fromARGB(255, 120, 179, 243)},
+];
+
+final List<Map<String, dynamic>> tagList = const [
+  {"name": "水感净颜不拔干"},
+  {"name": "舒缓修护强韧肌肤"},
+  {"name": "温和洁净无负担"},
+];
+
+final List<Map<String, dynamic>> bannerDataExtend = bannerData
+    .asMap()
+    .entries
+    .map((entry) {
+      int idx = entry.key;
+      Map<String, dynamic> item = entry.value;
+      return {...item, "index": idx};
+    })
+    .toList();
 
 class Detail extends StatelessWidget {
   const Detail({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('新功能页面内容', style: TextStyle(fontSize: 24)));
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // 顶部banner
+            Container(
+              width: double.infinity,
+              height: 400,
+              color: Colors.transparent,
+              child: PageView(
+                children: bannerDataExtend.map((item) {
+                  return Stack(
+                    children: [
+                      Container(color: item['color'] as Color),
+                      Positioned(
+                        bottom: 5,
+                        right: 5,
+                        width: 25,
+                        height: 18,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(140, 0, 0, 0),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            "${item['index'] + 1}/${bannerDataExtend.length}",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+            // 正文内容
+            Container(
+              color: Color.fromARGB(255, 244, 244, 244),
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    margin: EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text('￥', style: TextStyle(fontSize: 14)),
+                            Text('85', style: TextStyle(fontSize: 28)),
+                            Text('.00', style: TextStyle(fontSize: 14)),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                              margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 253, 238, 202),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                '会员价',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 65, 42, 4),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '非会员价￥125.00',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              color: Color.fromARGB(25, 249, 125, 125),
+                              padding: EdgeInsets.fromLTRB(4, 2, 4, 2),
+                              child: Text(
+                                '会员3件（及以上）9折',
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 241, 16, 0),
+                                ),
+                              ),
+                            ),
+                            Icon(CupertinoIcons.right_chevron, size: 16),
+                          ],
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          margin: EdgeInsets.fromLTRB(0, 6, 0, 10),
+                          child: Text(
+                            '适乐肤舒缓净颜泡沫洁面凝胶236ml',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                        Row(
+                          children: tagList.map((item) {
+                            return Container(
+                              margin: EdgeInsets.only(right: 4),
+                              padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(3),
+                                border: Border.all(
+                                  color: Color.fromARGB(153, 177, 110, 2),
+                                ),
+                              ),
+                              child: Text(
+                                item['name'],
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 177, 110, 2),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          color: Colors.transparent,
+                          margin: EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                color: Colors.transparent,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        '已选',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                    Text('适乐肌肤舒缓净颜泡沫洁面凝胶236ml'),
+                                  ],
+                                ),
+                              ),
+                              Icon(CupertinoIcons.right_chevron, size: 16),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          margin: EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                color: Colors.transparent,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        '配送',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                    Text('至 广东省广州市天河区东方路160号'),
+                                  ],
+                                ),
+                              ),
+                              Icon(CupertinoIcons.right_chevron, size: 16),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          margin: EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Text(
+                                  '配送',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 3),
+                                child: Text(
+                                  '闪电送',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              Text('门店接单后，快至30分钟内送达'),
+                              Padding(
+                                padding: EdgeInsets.only(left: 4),
+                                child: Icon(
+                                  CupertinoIcons.question_circle,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          margin: EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                color: Colors.transparent,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        '服务',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                    Text('正品保证 · 快至30分钟送达 · 满98元包邮'),
+                                  ],
+                                ),
+                              ),
+                              Icon(CupertinoIcons.right_chevron, size: 16),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

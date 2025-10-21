@@ -45,52 +45,58 @@ class Item extends StatelessWidget {
         color: Colors.white,
       ),
       margin: EdgeInsets.only(bottom: 10),
-      child: Column(
-        children: [
-          Container(
-            width: 180,
-            height: 120,
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 220, 220, 220),
-              borderRadius: BorderRadiusDirectional.only(
-                topStart: Radius.circular(6),
-                topEnd: Radius.circular(6),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/detail');
+        },
+        child: Column(
+          children: [
+            Container(
+              width: 180,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 220, 220, 220),
+                borderRadius: BorderRadiusDirectional.only(
+                  topStart: Radius.circular(6),
+                  topEnd: Radius.circular(6),
+                ),
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsetsGeometry.only(left: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('蜡笔小新手持风扇（小白款）'),
-                Text(
-                  '小新与你清凉一夏',
-                  style: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-                  textAlign: TextAlign.left,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 6),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text('￥', style: TextStyle(fontSize: 10)),
-                      Text('24.9', style: TextStyle(fontSize: 20)),
-                      Text(
-                        '￥69',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 139, 139, 139),
-                          fontSize: 10,
-                          decoration: TextDecoration.lineThrough,
-                        ),
-                      ),
-                    ],
+            Container(
+              padding: EdgeInsetsGeometry.only(left: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('蜡笔小新手持风扇（小白款）'),
+                  Text(
+                    '小新与你清凉一夏',
+                    style: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
+                    textAlign: TextAlign.left,
                   ),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: 6),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text('￥', style: TextStyle(fontSize: 10)),
+                        Text('24.9', style: TextStyle(fontSize: 20)),
+                        Text(
+                          '￥69',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 139, 139, 139),
+                            fontSize: 10,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
