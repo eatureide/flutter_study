@@ -53,9 +53,8 @@ class _Detail extends State<Detail> {
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (!_pageController.hasClients) return;
-      if (_currentIndex >= bannerDataExtend.length - 1) _currentIndex = 0;
       _currentIndex = _currentIndex + 1;
-
+      if (_currentIndex >= bannerDataExtend.length) _currentIndex = 0;
       _pageController.animateToPage(
         _currentIndex,
         duration: const Duration(milliseconds: 400),
@@ -85,6 +84,11 @@ class _Detail extends State<Detail> {
                 children: [
                   PageView(
                     controller: _pageController,
+                    onPageChanged: (index) {
+                      _timer.cancel();
+                      _startTimer();
+                      _currentIndex = index;
+                    },
                     children: bannerDataExtend.map((item) {
                       return Stack(
                         children: [
@@ -92,9 +96,8 @@ class _Detail extends State<Detail> {
                           Positioned(
                             bottom: 26,
                             right: 12,
-                            width: 25,
-                            height: 18,
                             child: Container(
+                              padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
                               decoration: BoxDecoration(
                                 color: const Color.fromARGB(140, 0, 0, 0),
                                 borderRadius: BorderRadius.circular(20),
