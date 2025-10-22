@@ -34,13 +34,16 @@ class Detail extends StatefulWidget {
 class _Detail extends State<Detail> {
   late PageController _pageController;
   late Timer _timer;
+  final ScrollController _scrollController = ScrollController();
   int _currentIndex = 0;
+  double topButtonVisible = 0;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _currentIndex);
     _startTimer();
+    _scrollController.addListener(_scrollListener);
   }
 
   @override
@@ -48,6 +51,22 @@ class _Detail extends State<Detail> {
     super.dispose();
     _timer.cancel();
     _pageController.dispose();
+    _scrollController.dispose();
+  }
+
+  void _scrollListener() {
+    bool needShow =
+        _scrollController.offset >=
+        _scrollController.position.maxScrollExtent - 500;
+    if (needShow) {
+      setState(() {
+        topButtonVisible = 1.0;
+      });
+      return;
+    }
+    setState(() {
+      topButtonVisible = 0;
+    });
   }
 
   void _startTimer() {
@@ -205,7 +224,10 @@ class _Detail extends State<Detail> {
                 ),
                 child: Text(
                   item['name'],
-                  style: TextStyle(color: Color.fromARGB(255, 177, 110, 2)),
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 177, 110, 2),
+                    fontSize: 12,
+                  ),
                 ),
               );
             }).toList(),
@@ -249,7 +271,7 @@ class _Detail extends State<Detail> {
           ),
           Container(
             color: Colors.transparent,
-            margin: EdgeInsets.only(bottom: 12),
+            margin: EdgeInsets.only(bottom: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -370,13 +392,15 @@ class _Detail extends State<Detail> {
               scrollDirection: Axis.horizontal,
               children: numbersList.map((item) {
                 return Container(
-                  margin: EdgeInsets.only(right: 12),
+                  margin: EdgeInsets.only(
+                    right: item == numbersList.length - 1 ? 0 : 12,
+                  ),
                   width: 260,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(
-                      color: const Color.fromARGB(166, 158, 158, 158),
+                      color: const Color.fromARGB(73, 158, 158, 158),
                     ),
                   ),
                   child: Row(
@@ -392,11 +416,14 @@ class _Detail extends State<Detail> {
                           children: [
                             Positioned(
                               bottom: 6,
-                              left: 4,
+                              left: 6,
                               child: Container(
+                                height: 16,
                                 padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
                                 color: const Color.fromARGB(181, 0, 0, 0),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.only(right: 4),
@@ -410,7 +437,7 @@ class _Detail extends State<Detail> {
                                       '7000',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 12,
+                                        fontSize: 10,
                                       ),
                                     ),
                                   ],
@@ -473,21 +500,151 @@ class _Detail extends State<Detail> {
     );
   }
 
+  buttonToor() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(14, 22, 14, 10),
+      width: double.infinity,
+      height: 100,
+      color: Colors.white,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.only(top: 2),
+                  height: 50,
+                  color: Colors.transparent,
+                  child: Column(
+                    children: [
+                      Icon(CupertinoIcons.shopping_cart),
+                      Text('购物车', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 2),
+                height: 50,
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                    Icon(CupertinoIcons.chat_bubble_2),
+                    Text('咨询', style: TextStyle(fontSize: 12)),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 2),
+                height: 50,
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                    Icon(CupertinoIcons.heart),
+                    Text('收藏', style: TextStyle(fontSize: 12)),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(45),
+                ),
+                width: 120,
+                height: 45,
+                child: Center(child: Text('立即购买')),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(45),
+                  color: Color.fromARGB(255, 101, 239, 208),
+                ),
+                width: 120,
+                height: 45,
+                child: Center(
+                  child: Text('加入购物车', style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  floatingActionButton() {
+    handleTap() {
+      _scrollController.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeOut,
+      );
+    }
+
+    return Container(
+      width: 50,
+      height: 110,
+      color: Colors.transparent,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(202, 255, 255, 255),
+              borderRadius: BorderRadius.circular(50),
+            ),
+            child: Icon(CupertinoIcons.share, size: 18),
+          ),
+          GestureDetector(
+            onTap: handleTap,
+            child: AnimatedOpacity(
+              opacity: topButtonVisible,
+              duration: Duration(milliseconds: 100),
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(202, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Icon(CupertinoIcons.up_arrow, size: 18),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: buttonToor(),
+      floatingActionButton: floatingActionButton(),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             bannerComponent(),
             Container(
-              height: 600,
               color: Color.fromARGB(255, 244, 244, 244),
               padding: EdgeInsets.fromLTRB(10, 6, 10, 10),
               child: Column(
-                children: [itemInformation(), locationService(), comment()],
+                children: [
+                  itemInformation(),
+                  locationService(),
+                  comment(),
+                  Container(color: Colors.transparent, height: 1000),
+                ],
               ),
             ),
           ],
