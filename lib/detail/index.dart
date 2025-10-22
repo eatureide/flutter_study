@@ -14,6 +14,8 @@ final List<Map<String, dynamic>> tagList = const [
   {"name": "温和洁净无负担"},
 ];
 
+List<int> numbersList = List.generate(10, (index) => index);
+
 final List<Map<String, dynamic>> bannerDataExtend = bannerData
     .asMap()
     .entries
@@ -343,7 +345,6 @@ class _Detail extends State<Detail> {
   }
 
   comment() {
-    List<int> numbersList = List.generate(10, (index) => index);
     return Container(
       height: 160,
       padding: EdgeInsets.all(16),
@@ -370,18 +371,15 @@ class _Detail extends State<Detail> {
                     ],
                   ),
                 ),
-                Container(
-                  color: Colors.transparent,
-                  child: Row(
-                    children: [
-                      Text('查看更多', style: TextStyle(fontSize: 12)),
-                      Icon(
-                        CupertinoIcons.chevron_right,
-                        size: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Text('查看更多', style: TextStyle(fontSize: 12)),
+                    Icon(
+                      CupertinoIcons.chevron_right,
+                      size: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -586,6 +584,21 @@ class _Detail extends State<Detail> {
       );
     }
 
+    final List<BoxShadow> boxShadow = [
+      BoxShadow(
+        color: Color.fromARGB(61, 158, 158, 158),
+        offset: Offset(4, 4),
+        blurRadius: 8.0,
+        spreadRadius: 0.0,
+      ),
+    ];
+
+    final Decoration boxDecoration = BoxDecoration(
+      boxShadow: boxShadow,
+      color: Color.fromARGB(172, 255, 255, 255),
+      borderRadius: BorderRadius.circular(50),
+    );
+
     return Container(
       width: 50,
       height: 110,
@@ -596,11 +609,15 @@ class _Detail extends State<Detail> {
           Container(
             width: 50,
             height: 50,
-            decoration: BoxDecoration(
-              color: Color.fromARGB(202, 255, 255, 255),
-              borderRadius: BorderRadius.circular(50),
+            decoration: boxDecoration,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(CupertinoIcons.share, size: 18),
+                Text('分享', style: TextStyle(fontSize: 10)),
+              ],
             ),
-            child: Icon(CupertinoIcons.share, size: 18),
           ),
           GestureDetector(
             onTap: handleTap,
@@ -610,12 +627,140 @@ class _Detail extends State<Detail> {
               child: Container(
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(202, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(50),
+                decoration: boxDecoration,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(CupertinoIcons.up_arrow, size: 18),
+                    Text('顶部', style: TextStyle(fontSize: 10)),
+                  ],
                 ),
-                child: Icon(CupertinoIcons.up_arrow, size: 18),
               ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  recommend() {
+    return Container(
+      margin: EdgeInsets.only(top: 12),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [Text('看过的人也喜欢', style: TextStyle(fontSize: 18))]),
+              Row(
+                children: [
+                  Text('查看更多', style: TextStyle(fontSize: 12)),
+                  Icon(
+                    CupertinoIcons.chevron_right,
+                    size: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            height: 190,
+            margin: EdgeInsets.only(top: 10),
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: numbersList.map((item) {
+                return Container(
+                  margin: EdgeInsets.only(
+                    right: item == numbersList.length - 1 ? 0 : 10,
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  width: 120,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 120,
+                        height: 100,
+                        margin: EdgeInsets.only(bottom: 4),
+                        color: Colors.transparent,
+                        child: Container(
+                          color: Color.fromARGB(255, 192, 192, 192),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(2, 0, 1, 6),
+                        child: Text(
+                          '适乐肌肤舒缓高湿洁面乳100克',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(2, 0, 1, 6),
+                        child: Text(
+                          '非会员价￥88.00',
+                          style: TextStyle(color: Colors.grey, fontSize: 10),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.fromLTRB(4, 0, 4, 2),
+                                margin: EdgeInsets.only(right: 4),
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 253, 238, 202),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  '会员价',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 65, 42, 4),
+                                  ),
+                                ),
+                              ),
+                              Text('￥68.00', style: TextStyle(fontSize: 12)),
+                            ],
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 71, 223, 203),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            width: 20,
+                            height: 20,
+                            child: Icon(
+                              CupertinoIcons.add,
+                              size: 10,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
             ),
           ),
         ],
@@ -643,7 +788,8 @@ class _Detail extends State<Detail> {
                   itemInformation(),
                   locationService(),
                   comment(),
-                  Container(color: Colors.transparent, height: 1000),
+                  recommend(),
+                  Container(color: Color.fromARGB(0, 172, 26, 26), height: 500),
                 ],
               ),
             ),
