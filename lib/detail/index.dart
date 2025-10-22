@@ -60,14 +60,9 @@ class _Detail extends State<Detail> {
     bool needShow =
         _scrollController.offset >=
         _scrollController.position.maxScrollExtent - 500;
-    if (needShow) {
-      setState(() {
-        topButtonVisible = 1.0;
-      });
-      return;
-    }
+
     setState(() {
-      topButtonVisible = 0;
+      topButtonVisible = needShow ? 1.0 : 0;
     });
   }
 
@@ -248,6 +243,8 @@ class _Detail extends State<Detail> {
         borderRadius: BorderRadius.circular(6),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             color: Colors.transparent,
@@ -276,6 +273,7 @@ class _Detail extends State<Detail> {
             margin: EdgeInsets.only(bottom: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   color: Colors.transparent,
@@ -297,6 +295,7 @@ class _Detail extends State<Detail> {
             color: Colors.transparent,
             margin: EdgeInsets.only(bottom: 12),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: EdgeInsets.only(right: 10),
@@ -321,6 +320,7 @@ class _Detail extends State<Detail> {
           Container(
             color: Colors.transparent,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
@@ -372,8 +372,10 @@ class _Detail extends State<Detail> {
                   ),
                 ),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('查看更多', style: TextStyle(fontSize: 12)),
+                    Text('查看更多', style: TextStyle(fontSize: 14)),
                     Icon(
                       CupertinoIcons.chevron_right,
                       size: 12,
@@ -550,7 +552,10 @@ class _Detail extends State<Detail> {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.transparent,
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(
+                    color: const Color.fromARGB(142, 0, 0, 0),
+                    width: 1,
+                  ),
                   borderRadius: BorderRadius.circular(45),
                 ),
                 width: 120,
@@ -632,7 +637,7 @@ class _Detail extends State<Detail> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(CupertinoIcons.up_arrow, size: 18),
+                    Icon(CupertinoIcons.chevron_up, size: 18),
                     Text('顶部', style: TextStyle(fontSize: 10)),
                   ],
                 ),
@@ -659,8 +664,10 @@ class _Detail extends State<Detail> {
             children: [
               Row(children: [Text('看过的人也喜欢', style: TextStyle(fontSize: 18))]),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('查看更多', style: TextStyle(fontSize: 12)),
+                  Text('查看更多', style: TextStyle(fontSize: 14)),
                   Icon(
                     CupertinoIcons.chevron_right,
                     size: 12,
@@ -789,7 +796,11 @@ class _Detail extends State<Detail> {
                   locationService(),
                   comment(),
                   recommend(),
-                  Container(color: Color.fromARGB(0, 172, 26, 26), height: 500),
+                  Container(
+                    margin: EdgeInsets.only(top: 12),
+                    color: Color.fromARGB(0, 172, 26, 26),
+                    height: 500,
+                  ),
                 ],
               ),
             ),
