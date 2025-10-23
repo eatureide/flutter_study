@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../nav.dart';
 import '../shop.dart';
 import '../classification/index.dart';
+import '../cart/index.dart';
 import '../home.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,7 +15,12 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   int _currentIndex = 0;
 
-  final List<Widget> pageList = const [Home(), Shop(), Classification()];
+  final List<Widget> pageList = const [
+    Home(),
+    Shop(),
+    CartPage(),
+    Classification(),
+  ];
 
   onTap(flag) {
     setState(() {

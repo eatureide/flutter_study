@@ -775,6 +775,60 @@ class _Detail extends State<Detail> {
     );
   }
 
+  brand() {
+    return Container(
+      margin: EdgeInsets.only(top: 12),
+      padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+      height: 80,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                margin: EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 190, 190, 190),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('适乐肤', style: TextStyle(fontSize: 16)),
+                  Text(
+                    '在售22件商品',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: const Color.fromARGB(255, 118, 118, 118),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text('逛逛品牌', style: TextStyle(fontSize: 14)),
+              Icon(
+                CupertinoIcons.chevron_right,
+                size: 12,
+                fontWeight: FontWeight.bold,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -796,10 +850,11 @@ class _Detail extends State<Detail> {
                   locationService(),
                   comment(),
                   recommend(),
+                  brand(),
                   Container(
                     margin: EdgeInsets.only(top: 12),
                     color: Color.fromARGB(0, 172, 26, 26),
-                    height: 500,
+                    height: 200,
                   ),
                 ],
               ),

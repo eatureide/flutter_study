@@ -22,18 +22,20 @@ class _Nav extends State<Nav> {
       onTap: (flag) {
         widget.onTap(flag);
       },
-      // showSelectedLabels: false,
-      // showUnselectedLabels: false,
       items: [
         BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.home, size: 20),
           label: ('首页'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.shopping_cart, size: 20),
+          icon: Icon(CupertinoIcons.cube_box, size: 20),
           label: ('商城'),
         ),
-         BottomNavigationBarItem(
+        BottomNavigationBarItem(
+          icon: Icon(CupertinoIcons.shopping_cart, size: 20),
+          label: ('购物车'),
+        ),
+        BottomNavigationBarItem(
           icon: Icon(CupertinoIcons.square_grid_2x2, size: 20),
           label: ('分类'),
         ),
