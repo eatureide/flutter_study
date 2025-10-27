@@ -9,10 +9,12 @@ class ScrollItem {
   final ScrollController controller;
   bool selected = false;
   int count = 1;
+  int price = 0;
   ScrollItem({
     required this.controller,
     required this.selected,
     required this.count,
+    required this.price,
   });
 }
 
@@ -26,13 +28,33 @@ class CartPage extends StatefulWidget {
 class _CartPage extends State<CartPage> {
   bool isAutoScrolling = false;
   bool allSelected = false;
+  int selectedLength = 0;
   List<ScrollItem> controList = numbersList.map((index) {
     return ScrollItem(
       controller: ScrollController(),
       selected: false,
       count: 1,
+      price: 97,
     );
   }).toList();
+
+  @override
+  initState() {
+    super.initState();
+    selectedLength = selectedCount();
+  }
+
+  selectedCount() {
+    int length = controList
+        .where((item) {
+          return item.selected == true;
+        })
+        .toList()
+        .length;
+    setState(() {
+      selectedLength = length;
+    });
+  }
 
   itemListComponent() {
     bool onNotification(ScrollNotification notification, int targetIndex) {
@@ -160,6 +182,7 @@ class _CartPage extends State<CartPage> {
       setState(() {
         controList[index].selected = !controList[index].selected;
         controList = controList;
+        selectedCount();
       });
     }
 
@@ -170,13 +193,11 @@ class _CartPage extends State<CartPage> {
       setState(() {
         allSelected = !allSelected;
         controList = controList;
+        selectedCount();
       });
     }
 
     handleCount(String actionType, int index) {
-      if (actionType == 'increment') {
-        controList[index].count = controList[index].count + 1;
-      }
       if (controList[index].count <= 0) {
         Fluttertoast.showToast(
           gravity: ToastGravity.CENTER,
@@ -186,6 +207,9 @@ class _CartPage extends State<CartPage> {
           fontSize: 16.0,
         );
         return;
+      }
+      if (actionType == 'increment') {
+        controList[index].count = controList[index].count + 1;
       }
       if (actionType == 'decrement') {
         controList[index].count = controList[index].count - 1;
@@ -309,7 +333,10 @@ class _CartPage extends State<CartPage> {
                                       ),
                                     ),
                                     Text('￥', style: TextStyle(fontSize: 10)),
-                                    Text('109', style: TextStyle(fontSize: 18)),
+                                    Text(
+                                      '${item.price}',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
                                   ],
                                 ),
                                 Text(
@@ -463,10 +490,75 @@ class _CartPage extends State<CartPage> {
     );
   }
 
+  navBar() {
+    return Container(
+      color: Colors.transparent,
+      height: 100,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            height: 80,
+            color: Colors.white,
+            padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 6),
+                        child: Icon(
+                          allSelected
+                              ? CupertinoIcons.checkmark_alt_circle_fill
+                              : CupertinoIcons.circle,
+                        ),
+                      ),
+                      Text('已选($selectedLength)'),
+                    ],
+                  ),
+                ),
+                Container(
+                  color: Colors.transparent,
+                  child: Row(
+                    children: [
+                      Text('合计：'),
+                      Text('￥', style: TextStyle(fontSize: 10)),
+                      Text('0.00', style: TextStyle(fontSize: 16)),
+                      Container(
+                        width: 110,
+                        height: 46,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 103, 239, 208),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        margin: EdgeInsets.only(left: 10),
+                        child: Center(
+                          child: Text(
+                            '结算',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
+      bottomNavigationBar: navBar(),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
