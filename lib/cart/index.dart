@@ -10,6 +10,7 @@ class ScrollItem {
   bool selected = false;
   int count = 1;
   int price = 0;
+
   ScrollItem({
     required this.controller,
     required this.selected,
@@ -29,6 +30,8 @@ class _CartPage extends State<CartPage> {
   bool isAutoScrolling = false;
   bool allSelected = false;
   int selectedLength = 0;
+  double totalPrice = 0.00;
+
   List<ScrollItem> controList = numbersList.map((index) {
     return ScrollItem(
       controller: ScrollController(),
@@ -45,15 +48,30 @@ class _CartPage extends State<CartPage> {
   }
 
   selectedCount() {
-    int length = controList
-        .where((item) {
-          return item.selected == true;
-        })
-        .toList()
-        .length;
+    List<ScrollItem> selectedItem = controList.where((item) {
+      return item.selected == true;
+    }).toList();
+
+    if (selectedItem.isEmpty) {
+      setState(() {
+        totalPrice = 0.00;
+      });
+      return 0;
+    }
+
+    int price = 0;
+    for (ScrollItem item in selectedItem) {
+      price = price + item.price;
+    }
+
+    int count = selectedItem.length;
+
     setState(() {
-      selectedLength = length;
+      selectedLength = count;
+      totalPrice = price.toDouble();
     });
+
+    return count;
   }
 
   void handleSelectAll() {
@@ -491,6 +509,8 @@ class _CartPage extends State<CartPage> {
   }
 
   navBar() {
+    String showPrice = totalPrice.toStringAsFixed(2);
+    print('$showPrice');
     return Container(
       color: Colors.transparent,
       height: 100,
@@ -530,7 +550,7 @@ class _CartPage extends State<CartPage> {
                     children: [
                       Text('合计：'),
                       Text('￥', style: TextStyle(fontSize: 10)),
-                      Text('0.00', style: TextStyle(fontSize: 16)),
+                      Text(showPrice, style: TextStyle(fontSize: 16)),
                       Container(
                         width: 110,
                         height: 46,
