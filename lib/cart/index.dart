@@ -56,6 +56,17 @@ class _CartPage extends State<CartPage> {
     });
   }
 
+  void handleSelectAll() {
+    for (ScrollItem item in controList) {
+      item.selected = allSelected ? false : true;
+    }
+    setState(() {
+      allSelected = !allSelected;
+      controList = controList;
+      selectedCount();
+    });
+  }
+
   itemListComponent() {
     bool onNotification(ScrollNotification notification, int targetIndex) {
       bool touchEnd = notification is ScrollEndNotification;
@@ -181,17 +192,6 @@ class _CartPage extends State<CartPage> {
     handleSelectItem(int index) {
       setState(() {
         controList[index].selected = !controList[index].selected;
-        controList = controList;
-        selectedCount();
-      });
-    }
-
-    void handleSelectAll() {
-      for (ScrollItem item in controList) {
-        item.selected = allSelected ? false : true;
-      }
-      setState(() {
-        allSelected = !allSelected;
         controList = controList;
         selectedCount();
       });
@@ -505,20 +505,23 @@ class _CartPage extends State<CartPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  color: Colors.transparent,
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(right: 6),
-                        child: Icon(
-                          allSelected
-                              ? CupertinoIcons.checkmark_alt_circle_fill
-                              : CupertinoIcons.circle,
+                GestureDetector(
+                  onTap: handleSelectAll,
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 6),
+                          child: Icon(
+                            allSelected
+                                ? CupertinoIcons.checkmark_alt_circle_fill
+                                : CupertinoIcons.circle,
+                          ),
                         ),
-                      ),
-                      Text('已选($selectedLength)'),
-                    ],
+                        Text('已选($selectedLength)'),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
