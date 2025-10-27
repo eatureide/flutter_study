@@ -29,8 +29,9 @@ class CartPage extends StatefulWidget {
 class _CartPage extends State<CartPage> {
   bool isAutoScrolling = false;
   bool allSelected = false;
-  int selectedLength = 0;
+  bool toastFinish = true;
   double totalPrice = 0.00;
+  int selectedLength = 0;
 
   List<ScrollItem> controList = numbersList.map((index) {
     return ScrollItem(
@@ -216,20 +217,26 @@ class _CartPage extends State<CartPage> {
     }
 
     handleCount(String actionType, int index) {
-      if (controList[index].count <= 0) {
-        Fluttertoast.showToast(
-          gravity: ToastGravity.CENTER,
-          msg: "最少保留一个商品",
-          backgroundColor: Colors.black54,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        return;
-      }
       if (actionType == 'increment') {
         controList[index].count = controList[index].count + 1;
       }
       if (actionType == 'decrement') {
+        print('$toastFinish,---');
+        if (!toastFinish) return;
+        if (controList[index].count <= 1) {
+          toastFinish = false;
+          Future.delayed(Duration(seconds: 3), () {
+            toastFinish = true;
+          });
+          Fluttertoast.showToast(
+            gravity: ToastGravity.CENTER,
+            msg: "最少保留一个商品",
+            backgroundColor: Colors.black54,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+          return;
+        }
         controList[index].count = controList[index].count - 1;
       }
       setState(() {
@@ -521,7 +528,7 @@ class _CartPage extends State<CartPage> {
           Container(
             height: 80,
             color: Colors.white,
-            padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+            padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
