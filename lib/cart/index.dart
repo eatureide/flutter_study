@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 
-List<int> numbersList = List.generate(3, (index) => index);
+List<int> numbersList = List.generate(10, (index) => index);
 
 class ScrollItem {
   final ScrollController controller;
@@ -58,15 +59,6 @@ class _CartPage extends State<CartPage> {
     }
 
     handleDelete(bool confirm, index) {
-      for (int i = 0; i < controList.length; i++) {
-        ScrollController scrollController = controList[i].controller;
-        scrollController.animateTo(
-          0,
-          duration: Duration(milliseconds: 150),
-          curve: Curves.easeInOut,
-        );
-      }
-
       ScrollController scrollController = controList[index].controller;
       scrollController.animateTo(
         0,
@@ -74,13 +66,13 @@ class _CartPage extends State<CartPage> {
         curve: Curves.easeInOut,
       );
 
-      if (confirm == true) {
+      Future.delayed(Duration(microseconds: 200), () {
+        if (confirm != true) return;
         controList.removeAt(index);
         setState(() {
           controList = controList;
         });
-      }
-
+      });
       Navigator.of(context).pop();
     }
 
@@ -91,7 +83,6 @@ class _CartPage extends State<CartPage> {
         builder: (BuildContext context) {
           return Dialog(
             child: SizedBox(
-              width: 600,
               height: 186,
               child: Container(
                 decoration: BoxDecoration(
@@ -122,7 +113,7 @@ class _CartPage extends State<CartPage> {
                             handleDelete(false, index);
                           },
                           child: Container(
-                            width: 150,
+                            width: 145,
                             height: 50,
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -139,7 +130,7 @@ class _CartPage extends State<CartPage> {
                             handleDelete(true, index);
                           },
                           child: Container(
-                            width: 150,
+                            width: 145,
                             height: 50,
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 91, 234, 208),
@@ -186,6 +177,16 @@ class _CartPage extends State<CartPage> {
       if (actionType == 'increment') {
         controList[index].count = controList[index].count + 1;
       }
+      if (controList[index].count <= 0) {
+        Fluttertoast.showToast(
+          gravity: ToastGravity.CENTER,
+          msg: "最少保留一个商品",
+          backgroundColor: Colors.black54,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        return;
+      }
       if (actionType == 'decrement') {
         controList[index].count = controList[index].count - 1;
       }
@@ -201,7 +202,7 @@ class _CartPage extends State<CartPage> {
       return Container(
         margin: EdgeInsets.only(bottom: 20),
         color: Colors.transparent,
-        height: 150,
+        height: 140,
         child: NotificationListener(
           onNotification: (ScrollNotification notification) {
             return onNotification(notification, index);
@@ -254,7 +255,7 @@ class _CartPage extends State<CartPage> {
                           color: Colors.transparent,
                           width: 220,
                           child: Text(
-                            '适乐肤缓净泡沫洁面着哩236ml  $index',
+                            '适乐肤缓净泡沫洁面着哩236ml $index',
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -450,7 +451,7 @@ class _CartPage extends State<CartPage> {
         ),
         Container(
           width: double.infinity,
-          padding: EdgeInsets.fromLTRB(0, 20, 0, 6),
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
           margin: EdgeInsets.fromLTRB(0, 12, 0, 12),
           decoration: BoxDecoration(
             color: Colors.white,
