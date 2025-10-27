@@ -56,7 +56,9 @@ class _CartPage extends State<CartPage> {
             totalPrice - controList[index].price * controList[index].count;
         totalPrice = newTotalPrice;
       }
-
+      if (controList[index].selected) {
+        selectedCount();
+      }
       controList = controList;
     });
   }
