@@ -48,24 +48,26 @@ class _CartPage extends State<CartPage> {
     selectedLength = selectedCount();
   }
 
+  handleSelectItem(int index) {
+    setState(() {
+      controList[index].selected = !controList[index].selected;
+      if (!controList[index].selected) {
+        double newTotalPrice =
+            totalPrice - controList[index].price * controList[index].count;
+        totalPrice = newTotalPrice;
+      }
+
+      controList = controList;
+    });
+  }
+
   selectedCount() {
-    List<ScrollItem> selectedItem = controList.where((item) {
-      return item.selected == true;
-    }).toList();
-
-    if (selectedItem.isEmpty) {
-      setState(() {
-        totalPrice = 0.00;
-      });
-      return 0;
-    }
-
     int price = 0;
-    for (ScrollItem item in selectedItem) {
+    for (ScrollItem item in controList) {
       price = price + (item.price * item.count);
     }
 
-    int count = selectedItem.length;
+    int count = controList.length;
 
     setState(() {
       selectedLength = count;
@@ -208,37 +210,30 @@ class _CartPage extends State<CartPage> {
       );
     }
 
-    handleSelectItem(int index) {
-      setState(() {
-        controList[index].selected = !controList[index].selected;
-        controList = controList;
-        selectedCount();
-      });
-    }
-
     handleCount(String actionType, int index) {
       if (actionType == 'increment') {
         controList[index].count = controList[index].count + 1;
       }
+      if (actionType == 'decrement' && !toastFinish) return;
+      if (actionType == 'decrement' && controList[index].count <= 1) {
+        toastFinish = false;
+        Future.delayed(Duration(seconds: 3), () {
+          toastFinish = true;
+        });
+        Fluttertoast.showToast(
+          gravity: ToastGravity.CENTER,
+          msg: "最少保留一个商品",
+          backgroundColor: Colors.black54,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+        return;
+      }
       if (actionType == 'decrement') {
-        if (!toastFinish) return;
-        if (controList[index].count <= 1) {
-          toastFinish = false;
-          Future.delayed(Duration(seconds: 3), () {
-            toastFinish = true;
-          });
-          Fluttertoast.showToast(
-            gravity: ToastGravity.CENTER,
-            msg: "最少保留一个商品",
-            backgroundColor: Colors.black54,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-          return;
-        }
         controList[index].count = controList[index].count - 1;
       }
       setState(() {
+        controList[index].selected = true;
         controList = controList;
         selectedCount();
       });
