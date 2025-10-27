@@ -221,7 +221,6 @@ class _CartPage extends State<CartPage> {
         controList[index].count = controList[index].count + 1;
       }
       if (actionType == 'decrement') {
-        print('$toastFinish,---');
         if (!toastFinish) return;
         if (controList[index].count <= 1) {
           toastFinish = false;
