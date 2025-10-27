@@ -61,7 +61,7 @@ class _CartPage extends State<CartPage> {
 
     int price = 0;
     for (ScrollItem item in selectedItem) {
-      price = price + item.price;
+      price = price + (item.price * item.count);
     }
 
     int count = selectedItem.length;
@@ -234,6 +234,7 @@ class _CartPage extends State<CartPage> {
       }
       setState(() {
         controList = controList;
+        selectedCount();
       });
     }
 
@@ -510,10 +511,9 @@ class _CartPage extends State<CartPage> {
 
   navBar() {
     String showPrice = totalPrice.toStringAsFixed(2);
-    print('$showPrice');
     return Container(
       color: Colors.transparent,
-      height: 100,
+      height: 80,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
