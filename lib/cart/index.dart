@@ -519,13 +519,13 @@ class _CartPage extends State<CartPage> {
     String showPrice = totalPrice.toStringAsFixed(2);
     return Container(
       color: Colors.transparent,
-      height: 80,
+      height: 70,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            height: 80,
+            height: 70,
             color: Colors.white,
             padding: EdgeInsets.fromLTRB(16, 0, 12, 0),
             child: Row(
