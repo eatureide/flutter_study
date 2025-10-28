@@ -49,8 +49,8 @@ class _CartPage extends State<CartPage> {
   }
 
   handleSelectItem(int index) {
+    controList[index].selected = !controList[index].selected;
     setState(() {
-      controList[index].selected = !controList[index].selected;
       if (!controList[index].selected) {
         double newTotalPrice =
             totalPrice - controList[index].price * controList[index].count;
@@ -65,27 +65,35 @@ class _CartPage extends State<CartPage> {
 
   selectedCount() {
     int price = 0;
+    int selectedCount = 0;
+
     for (ScrollItem item in controList) {
-      price = price + (item.price * item.count);
+      if (item.selected) {
+        price = price + (item.price * item.count);
+        selectedCount = selectedCount + 1;
+      }
     }
 
-    int count = controList.length;
-
     setState(() {
-      selectedLength = count;
+      selectedLength = selectedCount;
       totalPrice = price.toDouble();
     });
 
-    return count;
+    return selectedCount;
   }
 
   void handleSelectAll() {
     for (ScrollItem item in controList) {
       item.selected = allSelected ? false : true;
     }
+
     setState(() {
       allSelected = !allSelected;
       controList = controList;
+      if (!controList[0].selected) {
+        totalPrice = 0.00;
+        return;
+      }
       selectedCount();
     });
   }
@@ -580,6 +588,137 @@ class _CartPage extends State<CartPage> {
     );
   }
 
+  exchange() {
+    return Container(
+      width: double.infinity,
+      height: 110,
+      margin: EdgeInsets.only(bottom: 24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(3, 0, 3, 0),
+                margin: EdgeInsets.only(right: 4),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+                child: Center(
+                  child: Text(
+                    '换购',
+                    style: TextStyle(fontSize: 11, color: Colors.white),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 4),
+                child: Text(
+                  '会员任意购境内实物商品（不含换购商品），但单可享',
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '去购买',
+                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+                  Icon(
+                    CupertinoIcons.chevron_right,
+                    size: 10,
+                    color: Colors.grey,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 12),
+            color: Colors.transparent,
+            width: double.infinity,
+            height: 60,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: numbersList.map((item) {
+                return Container(
+                  width: 180,
+                  padding: EdgeInsets.only(left: 6),
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: const Color.fromARGB(82, 158, 158, 158),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 4),
+                        width: 50,
+                        height: 50,
+                        color: Color.fromARGB(255, 102, 239, 208),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 110,
+                            color: Colors.transparent,
+                            child: Text(
+                              '奥妙除螨洗衣液500ml',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          Text(
+                            '￥23.9',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: Colors.grey, // 例如：将删除线设置为红色
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text('￥', style: TextStyle(fontSize: 10)),
+                              Text('10.9', style: TextStyle(fontSize: 14)),
+                              Container(
+                                color: Color.fromARGB(255, 189, 255, 212),
+                                padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                                margin: EdgeInsets.only(left: 4),
+                                child: Text(
+                                  '换购价',
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -592,7 +731,7 @@ class _CartPage extends State<CartPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [itemListComponent()],
+            children: [exchange(), itemListComponent()],
           ),
         ),
       ),

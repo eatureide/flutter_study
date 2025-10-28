@@ -16,6 +16,7 @@ class _Nav extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Colors.white,
       currentIndex: widget.currentIndex,
       type: BottomNavigationBarType.fixed,
       fixedColor: Colors.blue,
