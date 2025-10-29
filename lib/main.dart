@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_page/index.dart';
 import 'detail/index.dart';
+import 'exchange/index.dart';
 
 
 void main() {
@@ -20,10 +21,11 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/',
+      initialRoute: '/exchange',
       routes: {
         '/': (context) => HomePage(),
-        '/detail': (context) => Detail()
+        '/detail': (context) => Detail(),
+        '/exchange': (context) => ExChange()
       },
     );
   }
