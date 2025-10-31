@@ -89,13 +89,20 @@ class _Index extends State<Index> {
               ),
               Container(
                 color: Colors.transparent,
+                height: 60,
                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 margin: EdgeInsets.only(top: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(children: [Icon(CupertinoIcons.cart), Text('购物车')]),
+                    Container(
+                      height: 45,
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [Icon(CupertinoIcons.cart), Text('购物车')],
+                      ),
+                    ),
                     Row(
                       children: [
                         Container(
@@ -135,7 +142,9 @@ class _Index extends State<Index> {
     );
   }
 
-  onPressed() {}
+  onPressed() {
+    print('111');
+  }
 
   mainBox() {
     return Scaffold(
