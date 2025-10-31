@@ -625,20 +625,25 @@ class _CartPage extends State<CartPage> {
                   style: TextStyle(fontSize: 12),
                 ),
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '去购买',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  ),
-                  Icon(
-                    CupertinoIcons.chevron_right,
-                    size: 10,
-                    color: Colors.grey,
-                  ),
-                ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/exchange');
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '去购买',
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    Icon(
+                      CupertinoIcons.chevron_right,
+                      size: 10,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

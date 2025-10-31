@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import '../utils.dart';
+
+List<int> numbersList = List.generate(10, (index) => index);
 
 class ExChange extends StatefulWidget {
   const ExChange({super.key});
@@ -14,18 +18,55 @@ class TabElement {
   TabElement({required this.title, required this.index, required this.count});
 }
 
-List<TabElement> tabDats = [
-  TabElement(title: '单件换购', index: 0, count: 0),
-  TabElement(title: '多件换购', index: 1, count: 0),
-  TabElement(title: '多件换购', index: 2, count: 0),
-  TabElement(title: '多件换购', index: 3, count: 0),
-];
+class ItemElement {
+  String title = '';
+  double price = 0.00;
+  double originalPrice = 00.00;
+  int count = 0;
+  int index = 0;
 
-List<int> numbersList = List.generate(10, (index) => index);
+  ItemElement({
+    required this.title,
+    required this.price,
+    required this.originalPrice,
+    required this.count,
+    required this.index,
+  });
+}
+
+List<ItemElement> itemListA = numbersList.map((index) {
+  return ItemElement(
+    title: '奥妙除螨洗衣液950克',
+    price: 23.00,
+    originalPrice: 72.00,
+    count: 0,
+    index: index,
+  );
+}).toList();
+
+List<ItemElement> itemListB = numbersList.map((index) {
+  return ItemElement(
+    title: '屈臣氏牌全柔巾洁面75片',
+    price: 20.00,
+    originalPrice: 39.00,
+    count: 0,
+    index: index,
+  );
+}).toList();
 
 class _ExChange extends State<ExChange> {
   final ScrollController _scrollController = ScrollController();
   int tabCurrentIndex = 0;
+  int tabTotalCount = 0;
+
+  List<TabElement> tabDats = [
+    TabElement(title: '单件换购', index: 0, count: 0),
+    TabElement(title: '多件换购', index: 1, count: 0),
+    TabElement(title: '多件换购', index: 2, count: 0),
+    TabElement(title: '多件换购', index: 3, count: 0),
+  ];
+
+  List<List<ItemElement>> combineList = [itemListA, itemListB];
 
   headerTab() {
     TextStyle curStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
@@ -79,13 +120,115 @@ class _ExChange extends State<ExChange> {
     );
   }
 
+  handleCount(String actionType, int index) {
+    List<ItemElement> target = combineList[tabCurrentIndex]; // 当前的商品列表
+    TabElement tabElm = tabDats[tabCurrentIndex]; // 当前的tab
+
+    // 少于0时，视为0
+    if (actionType == 'decrement' && target[index].count <= 0) {
+      target[index].count = 0;
+      return;
+    }
+
+    // 增加商品数量
+    if (actionType == 'increment') {
+      target[index].count = target[index].count + 1;
+    }
+
+    // 减少数量
+    if (actionType == 'decrement') {
+      target[index].count = target[index].count - 1;
+    }
+
+    // 重新计算当前列表的总数
+    tabElm.count = 0;
+    for (ItemElement item in target) {
+      tabElm.count = tabElm.count + item.count;
+    }
+
+    tabTotalCount = 0;
+    for (int i = 0; i < combineList.length; i++) {
+      for (ItemElement item in combineList[i]) {
+        tabTotalCount = tabTotalCount + item.count;
+      }
+    }
+
+    setState(() {
+      tabDats = tabDats;
+      combineList = combineList;
+      tabTotalCount = tabTotalCount;
+    });
+  }
+
   mainBox() {
     return Container(
       margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.fromLTRB(10, 15, 0, 15),
       color: Colors.white,
       child: Column(
-        children: numbersList.map((item) {
+        children: combineList[tabCurrentIndex].map((item) {
+          Widget countComponent() {
+            return Container(
+              height: 25,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(
+                  width: 1,
+                  color: const Color.fromARGB(156, 158, 158, 158),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      handleCount('decrement', item.index);
+                    },
+                    child: Container(
+                      width: 20,
+                      color: Colors.transparent,
+                      child: Center(child: Text('—')),
+                    ),
+                  ),
+                  Container(
+                    width: 20,
+                    color: Colors.transparent,
+                    child: Center(child: Text('${item.count}')),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      handleCount('increment', item.index);
+                    },
+                    child: Container(
+                      width: 20,
+                      color: Colors.transparent,
+                      child: Center(child: Text('+')),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          Widget cartIcon() {
+            return GestureDetector(
+              onTap: () {
+                handleCount('increment', item.index);
+              },
+              child: Container(
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 55, 218, 206),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Icon(CupertinoIcons.cart, size: 14, color: Colors.white),
+              ),
+            );
+          }
+
           return Container(
             color: Colors.transparent,
             margin: EdgeInsets.only(bottom: 16),
@@ -94,7 +237,10 @@ class _ExChange extends State<ExChange> {
                 Container(
                   width: 80,
                   height: 80,
-                  color: Colors.red,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 142, 250, 198),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
                   margin: EdgeInsets.only(right: 10),
                 ),
                 Expanded(
@@ -106,65 +252,45 @@ class _ExChange extends State<ExChange> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('奥妙除螨洗衣液950克'),
+                        Text(item.title),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Container(
                               color: Colors.transparent,
+                              height: 20,
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text('￥', style: TextStyle(fontSize: 10)),
-                                  Text('10.9', style: TextStyle(fontSize: 16)),
+                                  Text(
+                                    '${item.price}',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                   Container(
+                                    height: 20,
                                     padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
                                     margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
                                     color: Color.fromARGB(255, 145, 250, 209),
-                                    child: Text(
-                                      '换购价',
-                                      style: TextStyle(fontSize: 14),
+                                    child: Center(
+                                      child: Text(
+                                        '换购价',
+                                        style: TextStyle(fontSize: 10),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    '￥${item.originalPrice}',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(
-                                  width: 1,
-                                  color: const Color.fromARGB(
-                                    156,
-                                    158,
-                                    158,
-                                    158,
-                                  ),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 20,
-                                    color: Colors.transparent,
-                                    child: Center(child: Text('—')),
-                                  ),
-                                  Container(
-                                    width: 20,
-                                    color: Colors.transparent,
-                                    child: Center(child: Text('0')),
-                                  ),
-                                  Container(
-                                    width: 20,
-                                    color: Colors.transparent,
-                                    child: Center(child: Text('+')),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            item.count <= 0 ? cartIcon() : countComponent(),
                           ],
                         ),
                       ],
@@ -179,10 +305,36 @@ class _ExChange extends State<ExChange> {
     );
   }
 
+  narbar() {
+    return Container(
+      color: Colors.white,
+      height: 70,
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('已选（$tabTotalCount）件换购商品'),
+          Container(
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 55, 218, 206),
+              borderRadius: BorderRadius.circular(70),
+            ),
+            width: 100,
+            height: 40,
+            child: Center(
+              child: Text('去购物车', style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 242, 242, 242),
+      bottomNavigationBar: narbar(),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Container(
