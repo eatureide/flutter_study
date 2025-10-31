@@ -54,6 +54,26 @@ List<ItemElement> itemListB = numbersList.map((index) {
   );
 }).toList();
 
+List<ItemElement> itemListC = numbersList.map((index) {
+  return ItemElement(
+    title: '屈臣氏气泡水',
+    price: 5.00,
+    originalPrice: 12.00,
+    count: 0,
+    index: index,
+  );
+}).toList();
+
+List<ItemElement> itemListD = numbersList.map((index) {
+  return ItemElement(
+    title: '屈臣氏茶饮料',
+    price: 3.00,
+    originalPrice: 6.00,
+    count: 0,
+    index: index,
+  );
+}).toList();
+
 class _ExChange extends State<ExChange> {
   final ScrollController _scrollController = ScrollController();
   int tabCurrentIndex = 0;
@@ -66,11 +86,20 @@ class _ExChange extends State<ExChange> {
     TabElement(title: '多件换购', index: 3, count: 0),
   ];
 
-  List<List<ItemElement>> combineList = [itemListA, itemListB];
+  List<List<ItemElement>> combineList = [
+    itemListA,
+    itemListB,
+    itemListC,
+    itemListD,
+  ];
 
   headerTab() {
-    TextStyle curStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
-    TextStyle nornamStyle = TextStyle(fontSize: 14);
+    TextStyle curStyle = TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    );
+    TextStyle nornamStyle = TextStyle(fontSize: 14, color: Colors.black);
 
     setIndex(int index) {
       setState(() {
@@ -80,7 +109,7 @@ class _ExChange extends State<ExChange> {
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      padding: EdgeInsets.fromLTRB(20, 40, 20, 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: tabDats.map((item) {
@@ -92,11 +121,12 @@ class _ExChange extends State<ExChange> {
               color: Colors.transparent,
               child: Column(
                 children: [
-                  Text(
-                    item.title,
+                  AnimatedDefaultTextStyle(
                     style: item.index == tabCurrentIndex
                         ? curStyle
                         : nornamStyle,
+                    duration: const Duration(milliseconds: 100),
+                    child: Text(item.title),
                   ),
                   Text(
                     '已选购${item.count}件',
@@ -334,13 +364,17 @@ class _ExChange extends State<ExChange> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 242, 242, 242),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(75.0),
+        child: headerTab(),
+      ),
       bottomNavigationBar: narbar(),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Container(
-          padding: EdgeInsets.only(top: 40),
+          // padding: EdgeInsets.only(top: 40),
           color: Colors.transparent,
-          child: Column(children: [headerTab(), mainBox()]),
+          child: Column(children: [mainBox()]),
         ),
       ),
     );
