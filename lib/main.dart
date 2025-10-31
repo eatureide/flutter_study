@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page/index.dart';
 import 'detail/index.dart';
 import 'exchange/index.dart';
-
+import 'material/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,12 +20,12 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/exchange',
+      initialRoute: '/material',
       routes: {
         '/': (context) => HomePage(),
         '/detail': (context) => Detail(),
-        '/exchange': (context) => ExChange()
+        '/exchange': (context) => ExChange(),
+        '/material': (context) => Index(),
       },
     );
   }

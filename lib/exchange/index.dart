@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../utils.dart';
 
 List<int> numbersList = List.generate(10, (index) => index);
 
@@ -95,11 +94,11 @@ class _ExChange extends State<ExChange> {
 
   headerTab() {
     TextStyle curStyle = TextStyle(
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: FontWeight.bold,
       color: Colors.black,
     );
-    TextStyle nornamStyle = TextStyle(fontSize: 14, color: Colors.black);
+    TextStyle nornamStyle = TextStyle(fontSize: 12, color: Colors.black);
 
     setIndex(int index) {
       setState(() {
@@ -197,6 +196,7 @@ class _ExChange extends State<ExChange> {
       color: Colors.white,
       child: Column(
         children: combineList[tabCurrentIndex].map((item) {
+
           Widget countComponent() {
             return Container(
               height: 25,
@@ -372,7 +372,6 @@ class _ExChange extends State<ExChange> {
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Container(
-          // padding: EdgeInsets.only(top: 40),
           color: Colors.transparent,
           child: Column(children: [mainBox()]),
         ),
