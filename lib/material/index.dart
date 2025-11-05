@@ -16,7 +16,7 @@ class _Index extends State<Index> {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color.fromARGB(255, 156, 104, 247),
+          seedColor: Color.fromARGB(255, 2, 2, 2),
         ),
       ),
       home: swiper(),
