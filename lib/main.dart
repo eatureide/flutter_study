@@ -42,7 +42,7 @@ class _MyApp extends State<MyApp> {
         '/exchange': (context) => ExChange(),
         '/material': (context) => Index(),
         '/count': (context) => CountPage(),
-        '/state': (context) => ParentWidget(),
+        '/state': (context) => ParentWidgetC(),
       },
     );
   }
