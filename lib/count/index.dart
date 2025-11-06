@@ -41,42 +41,43 @@ class Count extends StatefulWidget {
 
 class _Count extends State<Count> {
   int _counter = 0;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _counter = widget.initValue;
-    print("initState");
+    debugPrint("initState");
   }
 
   @override
   void didUpdateWidget(Count oldWidget) {
     super.didUpdateWidget(oldWidget);
-    print("didUpdateWidget");
+    debugPrint("didUpdateWidget");
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    print("deactivate");
+    debugPrint("deactivate");
   }
 
   @override
   void dispose() {
     super.dispose();
-    print("dispose");
+    debugPrint("dispose");
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    print("reassemble");
+    debugPrint("reassemble");
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print("didChangeDependencies");
+    debugPrint("didChangeDependencies");
   }
 
   _incrementCounter() {
@@ -95,10 +96,15 @@ class _Count extends State<Count> {
     state.openDrawer();
   }
 
+  openDrawerByKey() {
+    scaffoldKey.currentState?.openDrawer();
+  }
+
   @override
   Widget build(BuildContext context) {
     print("build");
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(title: Text("子树中获取State对象")),
       drawer: Drawer(),
       body: Center(
@@ -110,9 +116,10 @@ class _Count extends State<Count> {
             Builder(
               builder: (context) {
                 return ElevatedButton(
-                  onPressed: () => openDrawer(Scaffold.of(context)),
+                  // onPressed: () => openDrawer(Scaffold.of(context)),
                   // onPressed: () => openDrawerByContext(context),
-                  child: Text('打开抽屉菜单1'),
+                  onPressed: () => openDrawerByKey(),
+                  child: Text('打开抽屉菜单'),
                 );
               },
             ),

@@ -24,10 +24,10 @@ class _MyApp extends State<MyApp> {
   }
 
   testSync() async {
-    // String res = await Future.delayed(Duration(seconds: 2), () {
-    //   return 'hello';
-    // });
-    // print(res);
+    String res = await Future.delayed(Duration(seconds: 2), () {
+      return 'hello';
+    });
+    debugPrint(res);
   }
 
   @override
