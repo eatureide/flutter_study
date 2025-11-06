@@ -1,5 +1,29 @@
 import 'package:flutter/material.dart';
 
+class NewRoute extends StatelessWidget {
+  final String routerText;
+  const NewRoute({super.key, required this.routerText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('new route')),
+      body: Center(
+        child: Column(
+          children: [
+            Text('this is new route'),
+            Text(routerText),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, "我是返回值"),
+              child: Text("返回"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class Echo extends StatelessWidget {
   const Echo({
     super.key,
@@ -109,7 +133,7 @@ class _Count extends State<Count> {
 
   @override
   Widget build(BuildContext context) {
-    print("build");
+    debugPrint("build");
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(title: Text("子树中获取State对象")),
@@ -129,6 +153,7 @@ class _Count extends State<Count> {
                 );
               },
             ),
+
             Builder(
               builder: (context) {
                 return ElevatedButton(
@@ -138,6 +163,22 @@ class _Count extends State<Count> {
                   // onPressed: () => openSnackBar(context),
                   child: Text('打开抽屉菜单'),
                 );
+              },
+            ),
+
+            TextButton(
+              child: Text('open new route'),
+              onPressed: () async {
+                String result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    fullscreenDialog: false,
+                    builder: (context) {
+                      return NewRoute(routerText: '我是路由传参');
+                    },
+                  ),
+                );
+                debugPrint(result);
               },
             ),
           ],

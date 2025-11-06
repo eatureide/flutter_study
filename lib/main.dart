@@ -35,7 +35,7 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/state',
+      initialRoute: '/count',
       routes: {
         '/': (context) => HomePage(),
         '/detail': (context) => Detail(),
