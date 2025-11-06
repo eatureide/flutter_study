@@ -38,9 +38,9 @@ class _TapBoxA extends State<TapBoxA> {
 }
 
 class TapBoxB extends StatelessWidget {
-  const TapBoxB({super.key, required this.active, required this.onChanged});
   final bool active;
   final void Function(bool value) onChanged;
+  const TapBoxB({super.key, required this.active, required this.onChanged});
 
   void handleTap() {
     onChanged(!active);
