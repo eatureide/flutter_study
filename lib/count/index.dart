@@ -41,7 +41,8 @@ class Count extends StatefulWidget {
 
 class _Count extends State<Count> {
   int _counter = 0;
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
   void initState() {
@@ -100,6 +101,12 @@ class _Count extends State<Count> {
     scaffoldKey.currentState?.openDrawer();
   }
 
+  openSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("这里是SnackBar")));
+  }
+
   @override
   Widget build(BuildContext context) {
     print("build");
@@ -113,12 +120,22 @@ class _Count extends State<Count> {
             Echo(text: 'Increment'),
             Text('you have pushed the button this many times:'),
             Text('$_counter', style: Theme.of(context).textTheme.headlineLarge),
+
+            Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () => openSnackBar(context),
+                  child: Text('打开SnackBar'),
+                );
+              },
+            ),
             Builder(
               builder: (context) {
                 return ElevatedButton(
                   // onPressed: () => openDrawer(Scaffold.of(context)),
                   // onPressed: () => openDrawerByContext(context),
                   onPressed: () => openDrawerByKey(),
+                  // onPressed: () => openSnackBar(context),
                   child: Text('打开抽屉菜单'),
                 );
               },

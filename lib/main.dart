@@ -4,6 +4,7 @@ import 'detail/index.dart';
 import 'exchange/index.dart';
 import 'material/index.dart';
 import 'count/index.dart';
+import 'state/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,13 +35,14 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/count',
+      initialRoute: '/state',
       routes: {
         '/': (context) => HomePage(),
         '/detail': (context) => Detail(),
         '/exchange': (context) => ExChange(),
         '/material': (context) => Index(),
         '/count': (context) => CountPage(),
+        '/state': (context) => ParentWidget(),
       },
     );
   }
