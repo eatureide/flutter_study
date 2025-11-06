@@ -5,6 +5,7 @@ import 'exchange/index.dart';
 import 'material/index.dart';
 import 'count/index.dart';
 import 'state/index.dart';
+import 'new_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +42,7 @@ class _MyApp extends State<MyApp> {
         '/detail': (context) => Detail(),
         '/exchange': (context) => ExChange(),
         '/material': (context) => Index(),
+        '/new_page': (context) => NewPage(),
         '/count': (context) => CountPage(),
         '/state': (context) => ParentWidgetC(),
       },

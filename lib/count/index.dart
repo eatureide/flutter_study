@@ -1,29 +1,5 @@
 import 'package:flutter/material.dart';
 
-class NewRoute extends StatelessWidget {
-  final String routerText;
-  const NewRoute({super.key, required this.routerText});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('new route')),
-      body: Center(
-        child: Column(
-          children: [
-            Text('this is new route'),
-            Text(routerText),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context, "我是返回值"),
-              child: Text("返回"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class Echo extends StatelessWidget {
   const Echo({
     super.key,
@@ -47,11 +23,7 @@ class CountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: Count(),
-    );
+    return Count();
   }
 }
 
@@ -65,7 +37,6 @@ class Count extends StatefulWidget {
 
 class _Count extends State<Count> {
   int _counter = 0;
-  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
@@ -105,7 +76,7 @@ class _Count extends State<Count> {
     debugPrint("didChangeDependencies");
   }
 
-  _incrementCounter() {
+  incrementCounter() {
     setState(() {
       _counter++;
     });
@@ -169,23 +140,18 @@ class _Count extends State<Count> {
             TextButton(
               child: Text('open new route'),
               onPressed: () async {
-                String result = await Navigator.push(
+                dynamic res = await Navigator.of(
                   context,
-                  MaterialPageRoute(
-                    fullscreenDialog: false,
-                    builder: (context) {
-                      return NewRoute(routerText: '我是路由传参');
-                    },
-                  ),
-                );
-                debugPrint(result);
+                ).pushNamed("/new_page", arguments: '我是参数');
+                if (res) debugPrint(res);
               },
             ),
+
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
