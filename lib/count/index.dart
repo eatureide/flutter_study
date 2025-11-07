@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
+import 'dart:async';
+import 'dart:developer' as developer;
+import 'dart:convert';
+
+Map<String, dynamic> data = {
+  'user_id': 1001,
+  'username': 'Alice',
+  'details': {'city': 'New York', 'zip': '10001'},
+};
 
 class Echo extends StatelessWidget {
   const Echo({
@@ -38,12 +48,15 @@ class Count extends StatefulWidget {
 class _Count extends State<Count> {
   int _counter = 0;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  String ramdomEnglish = '';
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
     _counter = widget.initValue;
     debugPrint("initState");
+    // createRandomEnglish();
   }
 
   @override
@@ -61,6 +74,8 @@ class _Count extends State<Count> {
   @override
   void dispose() {
     super.dispose();
+    timer?.cancel();
+    timer = null;
     debugPrint("dispose");
   }
 
@@ -77,6 +92,10 @@ class _Count extends State<Count> {
   }
 
   incrementCounter() {
+    const encoder = JsonEncoder.withIndent('  ');
+    String prettyJson = encoder.convert(data);
+    developer.log(prettyJson);
+
     setState(() {
       _counter++;
     });
@@ -100,6 +119,15 @@ class _Count extends State<Count> {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text("这里是SnackBar")));
+  }
+
+  createRandomEnglish() {
+    timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        ramdomEnglish = WordPair.random().toString();
+        debugPrint(ramdomEnglish);
+      });
+    });
   }
 
   @override
@@ -147,6 +175,7 @@ class _Count extends State<Count> {
               },
             ),
 
+            // ElevatedButton(onPressed: () {}, child: Text(ramdomEnglish)),
           ],
         ),
       ),

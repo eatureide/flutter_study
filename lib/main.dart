@@ -6,6 +6,7 @@ import 'material/index.dart';
 import 'count/index.dart';
 import 'state/index.dart';
 import 'new_page.dart';
+import 'stack/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,7 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/count',
+      initialRoute: '/stack_demo',
       routes: {
         '/': (context) => HomePage(),
         '/detail': (context) => Detail(),
@@ -45,6 +46,7 @@ class _MyApp extends State<MyApp> {
         '/new_page': (context) => NewPage(),
         '/count': (context) => CountPage(),
         '/state': (context) => ParentWidgetC(),
+        '/stack_demo': (context) => StackDemo(),
       },
     );
   }
