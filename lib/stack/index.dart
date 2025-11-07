@@ -79,6 +79,14 @@ class _StackDemo extends State<StackDemo> {
                     ),
                     obscureText: true,
                   ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    color: Colors.transparent,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('login'),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -98,6 +106,58 @@ class _StackDemo extends State<StackDemo> {
         ),
       ),
     ];
+  }
+
+  flexItem() {
+    return Container(
+      color: Colors.white,
+      width: 200,
+      height: 200,
+      child: Flex(
+        direction: Axis.vertical,
+        children: [
+          Container(
+            width: double.infinity,
+            color: Colors.red,
+            child: Text('11'),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: double.infinity,
+              color: Colors.blue,
+              child: Text('333'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  wrapComponent() {
+    return Wrap(
+      spacing: 8.0, // 主轴(水平)方向间距
+      runSpacing: 4.0, // 纵轴（垂直）方向间距
+      alignment: WrapAlignment.start, //沿主轴方向居中
+      children: <Widget>[
+        Chip(
+          avatar: CircleAvatar(backgroundColor: Colors.blue, child: Text('A')),
+          label: Text('Hamilton'),
+        ),
+        Chip(
+          avatar: CircleAvatar(backgroundColor: Colors.blue, child: Text('M')),
+          label: Text('Lafayette'),
+        ),
+        Chip(
+          avatar: CircleAvatar(backgroundColor: Colors.blue, child: Text('H')),
+          label: Text('Mulligan'),
+        ),
+        Chip(
+          avatar: CircleAvatar(backgroundColor: Colors.blue, child: Text('J')),
+          label: Text('Laurens'),
+        ),
+      ],
+    );
   }
 
   @override
@@ -124,6 +184,8 @@ class _StackDemo extends State<StackDemo> {
                     onPressed: switchVisible,
                     child: Text("DialogControl"),
                   ),
+                  flexItem(),
+                  wrapComponent(),
                 ],
               ),
             ),
