@@ -1,5 +1,17 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+// 最好定义为全局或静态 final 变量
+final logger = Logger(
+  printer: PrettyPrinter(
+    methodCount: 2, // 显示 2 行调用堆栈
+    errorMethodCount: 8, // 错误时显示 8 行
+    lineLength: 120, // 打印内容的最大长度
+    colors: true, // 启用颜色
+    printEmojis: true, // 启用表情符号
+  ),
+);
 
 bool toastFinish = true;
 showToast(String msg) {

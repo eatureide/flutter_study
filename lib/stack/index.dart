@@ -163,13 +163,14 @@ class _StackDemo extends State<StackDemo> {
   @override
   Widget build(BuildContext context) {
     var screenInfo = getScreenInfo(context);
+    ScrollPhysics physics = dialogVisible
+        ? NeverScrollableScrollPhysics()
+        : AlwaysScrollableScrollPhysics();
     return Scaffold(
       appBar: AppBar(title: Text('StackDemo')),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        physics: dialogVisible
-            ? NeverScrollableScrollPhysics()
-            : AlwaysScrollableScrollPhysics(),
+        physics: physics,
         child: Stack(
           children: [
             Container(

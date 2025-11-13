@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'dart:async';
-import 'dart:developer' as developer;
-import 'dart:convert';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import '../utils.dart';
 
 Map<String, dynamic> data = {
   'user_id': 1001,
@@ -56,7 +57,7 @@ class _Count extends State<Count> {
     super.initState();
     _counter = widget.initValue;
     debugPrint("initState");
-    // createRandomEnglish();
+    countInit();
   }
 
   @override
@@ -91,36 +92,69 @@ class _Count extends State<Count> {
     debugPrint("didChangeDependencies");
   }
 
-  incrementCounter() {
-    const encoder = JsonEncoder.withIndent('  ');
-    String prettyJson = encoder.convert(data);
-    developer.log(prettyJson);
-
+  // 初始化缓存的值
+  countInit() async {
+    int res = await readCounter();
+    logger.d('初始count：$res');
+    if (res == 0) return;
     setState(() {
-      _counter++;
+      _counter = res;
     });
   }
 
+  // 缓存位置
+  Future<File> getLocalFile() async {
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    return File('$dir/counter.txt');
+  }
+
+  // 读取缓存计数器的值
+  Future<int> readCounter() async {
+    try {
+      File file = await getLocalFile();
+      String contents = await file.readAsString();
+      return int.parse(contents);
+    } on FileSystemException {
+      return 0;
+    }
+  }
+
+  // 增加,每次都更新到缓存里
+  incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+
+    getLocalFile().then((e) {
+      e.writeAsString('$_counter');
+    });
+  }
+
+  // 打开侧边栏
   openDrawer(ScaffoldState state) {
     ScaffoldState state = context.findAncestorStateOfType<ScaffoldState>()!;
     state.openDrawer();
   }
 
+  // 打开侧边栏
   openDrawerByContext(BuildContext context) {
     ScaffoldState state = context.findAncestorStateOfType<ScaffoldState>()!;
     state.openDrawer();
   }
 
+  // 打开侧边栏
   openDrawerByKey() {
     scaffoldKey.currentState?.openDrawer();
   }
 
+  // 打开SnackBar
   openSnackBar(BuildContext context) {
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text("这里是SnackBar")));
   }
 
+  // 随机生成一个英文
   createRandomEnglish() {
     timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       setState(() {
