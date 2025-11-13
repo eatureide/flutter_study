@@ -7,6 +7,7 @@ import 'count/index.dart';
 import 'state/index.dart';
 import 'new_page.dart';
 import 'stack/index.dart';
+import 'req.dart';
 
 void main() {
   runApp(const MyApp());
@@ -83,6 +84,11 @@ class _MyApp extends State<MyApp> {
               onPressed: () => onTap('/stack_demo'),
               child: Text('stack_demo'),
             ),
+            Text('请求示例'),
+            ElevatedButton(
+              onPressed: () => onTap('/req'),
+              child: Text('req'),
+            ),
           ],
         ),
       ),
@@ -93,7 +99,7 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      initialRoute: '/',
+      initialRoute: '/req',
       routes: {
         '/': (context) => routerList(context),
         '/home': (context) => HomePage(),
@@ -104,6 +110,7 @@ class _MyApp extends State<MyApp> {
         '/count': (context) => CountPage(),
         '/state': (context) => ParentWidgetC(),
         '/stack_demo': (context) => StackDemo(),
+        '/req': (context) => Req(),
       },
     );
   }

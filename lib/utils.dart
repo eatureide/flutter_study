@@ -1,6 +1,9 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'dart:developer';
+import 'dart:convert';
+import 'package:dio/dio.dart';
 
 // 最好定义为全局或静态 final 变量
 final logger = Logger(
@@ -55,4 +58,18 @@ ScreenInfo getScreenInfo(BuildContext context) {
     screenWidth: screenWidth,
     appBarHeight: totalTopHeight,
   );
+}
+
+void console(dynamic data) {
+  try {
+    if (data is Map || data is List) {
+      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+      String prettyData = encoder.convert(data);
+      log(prettyData);
+    } else {
+      log(data.toString());
+    }
+  } catch (e) {
+    log('Error logging response body: $e');
+  }
 }
