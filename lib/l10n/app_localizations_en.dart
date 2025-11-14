@@ -15,4 +15,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String greetingWithName(String name) {
     return 'Hello $name';
   }
+
+  @override
+  String get routerTitle => 'routerList';
 }

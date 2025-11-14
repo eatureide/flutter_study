@@ -8,7 +8,7 @@ import 'state/index.dart';
 import 'new_page.dart';
 import 'stack/index.dart';
 import 'req.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; // 导入这个包
 
 void main() {
@@ -29,17 +29,21 @@ class _MyApp extends State<MyApp> {
   }
 
   routerList(context) {
-
+    final l10n = AppLocalizations.of(context)!;
 
     onTap(String router) {
       Navigator.of(context).pushNamed(router);
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('hello')),
+      appBar: AppBar(title: Text(l10n.routerTitle)),
       body: Center(
         child: Column(
           children: [
+            Text(l10n.greetingWithName('Gemini')),
+            SizedBox(height: 20),
+            Text('尝试更改你的设备语言为英文或中文来查看变化！'),
+            SizedBox(height: 20),
             Text('主页'),
             ElevatedButton(
               onPressed: () => onTap('/home'),

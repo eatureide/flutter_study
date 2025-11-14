@@ -15,4 +15,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String greetingWithName(String name) {
     return '你好，$name';
   }
+
+  @override
+  String get routerTitle => '路由列表';
 }

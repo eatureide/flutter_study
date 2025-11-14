@@ -106,6 +106,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hello {name}'**
   String greetingWithName(String name);
+
+  /// No description provided for @routerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'routerList'**
+  String get routerTitle;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
