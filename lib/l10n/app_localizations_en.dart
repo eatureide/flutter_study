@@ -12,10 +12,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helloWorld => 'Hello World!';
 
   @override
-  String greetingWithName(String name) {
+  String greetingWithName(Object name) {
     return 'Hello $name';
   }
 
   @override
   String get routerTitle => 'routerList';
+
+  @override
+  String get settingTitle => 'setting';
 }

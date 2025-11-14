@@ -9,7 +9,8 @@ import 'new_page.dart';
 import 'stack/index.dart';
 import 'req.dart';
 import 'l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart'; // 导入这个包
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'setting.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +24,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
+  Locale? locale;
+
+  void setLocale(Locale value) {
+    setState(() {
+      locale = value;
+    });
+  }
+
   @override
   initState() {
     super.initState();
@@ -86,6 +95,11 @@ class _MyApp extends State<MyApp> {
             ),
             Text('请求示例'),
             ElevatedButton(onPressed: () => onTap('/req'), child: Text('req')),
+            Text('设置页'),
+            ElevatedButton(
+              onPressed: () => onTap('/setting'),
+              child: Text('setting'),
+            ),
           ],
         ),
       ),
@@ -96,13 +110,13 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MaterialApp',
+      locale: locale,
       initialRoute: '/',
       supportedLocales: [
         Locale('en', ''), // English
         Locale('zh', ''), // Chinese
       ],
       localizationsDelegates: const [
-        // AppLocalizationsDelegate(),
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -119,6 +133,7 @@ class _MyApp extends State<MyApp> {
         '/state': (context) => ParentWidgetC(),
         '/stack_demo': (context) => StackDemo(),
         '/req': (context) => Req(),
+        '/setting': (context) => SettingPage(onChangeLanguage: setLocale),
       },
     );
   }

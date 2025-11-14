@@ -5,12 +5,11 @@
   },
   "greetingWithName": "Hello {name}",
   "@greetingWithName": {
-    "description": "A greeting with a name",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
+    "description": "A greeting with a name"
   },
-  "routerTitle": "routerList"
+  "routerTitle": "routerList",
+  "@routerTitle": {
+    "description": "router list page title"
+  },
+  "settingTitle": "setting"
 }

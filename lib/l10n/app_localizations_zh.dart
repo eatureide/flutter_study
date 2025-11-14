@@ -12,10 +12,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get helloWorld => '你好，世界！';
 
   @override
-  String greetingWithName(String name) {
+  String greetingWithName(Object name) {
     return '你好，$name';
   }
 
   @override
   String get routerTitle => '路由列表';
+
+  @override
+  String get settingTitle => '设置';
 }
