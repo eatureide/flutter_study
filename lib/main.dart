@@ -8,6 +8,8 @@ import 'state/index.dart';
 import 'new_page.dart';
 import 'stack/index.dart';
 import 'req.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'; // 导入这个包
 
 void main() {
   runApp(const MyApp());
@@ -24,23 +26,17 @@ class _MyApp extends State<MyApp> {
   @override
   initState() {
     super.initState();
-    testSync();
-  }
-
-  testSync() async {
-    String res = await Future.delayed(Duration(seconds: 2), () {
-      return 'hello';
-    });
-    debugPrint(res);
   }
 
   routerList(context) {
+
+
     onTap(String router) {
       Navigator.of(context).pushNamed(router);
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('路由列表')),
+      appBar: AppBar(title: Text('hello')),
       body: Center(
         child: Column(
           children: [
@@ -85,10 +81,7 @@ class _MyApp extends State<MyApp> {
               child: Text('stack_demo'),
             ),
             Text('请求示例'),
-            ElevatedButton(
-              onPressed: () => onTap('/req'),
-              child: Text('req'),
-            ),
+            ElevatedButton(onPressed: () => onTap('/req'), child: Text('req')),
           ],
         ),
       ),
@@ -98,8 +91,19 @@ class _MyApp extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      initialRoute: '/req',
+      title: 'MaterialApp',
+      initialRoute: '/',
+      supportedLocales: [
+        Locale('en', ''), // English
+        Locale('zh', ''), // Chinese
+      ],
+      localizationsDelegates: const [
+        // AppLocalizationsDelegate(),
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       routes: {
         '/': (context) => routerList(context),
         '/home': (context) => HomePage(),

@@ -1,0 +1,15 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional greeting"
+  },
+  "greetingWithName": "Hello {name}",
+  "@greetingWithName": {
+    "description": "A greeting with a name",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
+}
